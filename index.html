@@ -1,0 +1,321 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Untuk Akbar — Lyaakbarra</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg1:#2c1b2d; /* Pink gelap */
+      --bg2:#4b2b36; /* Deep rose brown */
+      --accent:#ffb6c1; /* Soft pink accent */
+      --muted:#f8d7da; /* Light pink muted text */
+      --glass: rgba(255, 192, 203, 0.1); 
+      --card-shadow: 0 0 20px rgba(255, 182, 193, 0.4);
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial}
+    body{
+      background: linear-gradient(135deg, var(--bg1), var(--bg2), #8c4764);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:32px;
+      color: #fff;
+    }
+
+    .container{
+      width:100%;
+      max-width:900px;
+      background: var(--glass);
+      border-radius:20px;
+      padding:28px;
+      box-shadow:var(--card-shadow);
+      position:relative;
+      overflow:hidden;
+      backdrop-filter: blur(8px);
+      border: 2px solid rgba(255, 192, 203, 0.3);
+    }
+
+    header{display:flex;gap:16px;align-items:center}
+    .logo{font-family:'Great Vibes',cursive;font-size:36px;color:var(--accent)}
+    .meta{flex:1}
+    .meta h1{margin:0;font-size:20px;color:var(--accent)}
+    .meta p{margin:4px 0 0;font-size:13px;color:var(--muted)}
+
+    .card{
+      margin-top:18px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius:14px;
+      padding:22px;
+      box-shadow:0 0 15px rgba(255, 182, 193, 0.2);
+    }
+
+    .message{
+      font-size:18px;
+      color:#f8d7da;
+      line-height:1.6;
+      min-height:140px
+    }
+    .message .typing{border-right:2px solid rgba(255,255,255,0.4);padding-right:4px}
+
+    .controls{display:flex;gap:10px;align-items:center;margin-top:18px}
+    .btn{
+      background:var(--accent);
+      color:#2c1b2d;
+      border:none;
+      padding:10px 14px;
+      border-radius:10px;
+      font-weight:600;
+      cursor:pointer;
+      transition: background 0.3s ease;
+    }
+    .btn:hover {
+      background: #f8d7da;
+    }
+    .btn.ghost{
+      background:transparent;
+      color:var(--accent);
+      border:1px solid rgba(255, 192, 203, 0.25);
+    }
+
+    .art{
+      position:absolute;
+      right:-60px;
+      top:-60px;
+      width:280px;
+      height:280px;
+      pointer-events:none;
+      opacity:0.12
+    }
+
+    footer{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      margin-top:16px;
+      font-size:12px;
+      color:var(--muted)
+    }
+
+    /* overlay for reveal */
+    .reveal{
+      position:fixed;
+      left:0;
+      top:0;
+      width:100%;
+      height:100%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background:rgba(6,6,6,0.6);
+      backdrop-filter: blur(4px);
+      z-index:80;
+      opacity:0;
+      pointer-events:none;
+      transition:all .28s ease;
+    }
+    .reveal.show{opacity:1;pointer-events:auto}
+    .modal{
+      background:linear-gradient(180deg,#2c1b2d,#4b2b36);
+      padding:22px;
+      border-radius:14px;
+      max-width:720px;
+      width:92%;
+      box-shadow:0 18px 50px rgba(255, 182, 193, 0.4);
+      color: #f8d7da;
+    }
+
+    /* small responsive */
+    @media (max-width:600px){
+      .logo{font-size:28px}
+      .message{font-size:16px}
+    }
+
+    /* little star animation */
+    .stars{position:absolute;inset:0;pointer-events:none}
+    canvas{display:block}
+
+    .share{display:flex;gap:8px;align-items:center}
+    .share input{
+      padding:8px;
+      border-radius:8px;
+      border:1px solid rgba(255,192,203,0.25);
+      background: rgba(255,255,255,0.05);
+      color: var(--muted);
+      min-width:200px
+    }
+
+    .credit{font-size:11px;color:rgba(255,182,193,0.45)}
+  </style>
+</head>
+<body>
+  <div class="container" role="main">
+    <div class="stars"><canvas id="cstars"></canvas></div>
+    <header>
+      <div class="logo">Lyaakbarra</div>
+      <div class="meta">
+        <h1>Untuk Akbar</h1>
+        <p>Halaman ini dibuat khusus oleh Lya — ruang aman untuk menaruh rindu.</p>
+      </div>
+      <svg class="art" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="g" x1="0" x2="1">
+            <stop offset="0" stop-color="#ffb6c1"/>
+            <stop offset="1" stop-color="#8c4764"/>
+          </linearGradient>
+        </defs>
+        <path fill="url(#g)" d="M43.2,-49.3C57.7,-41.5,73.9,-33.6,78.5,-21.2C83.1,-8.8,76.1,8.8,65.3,21.6C54.5,34.3,39.9,41.1,25.9,47.3C11.9,53.5,-1.6,59,-14.8,57.3C-28,55.7,-41,46.8,-49.8,34.9C-58.6,23,-63.3,8.1,-60.1,-6.6C-56.9,-21.4,-45.8,-35.8,-32.2,-44.6C-18.6,-53.5,-9.3,-56.8,3.1,-61.3C15.5,-65.9,31,-70.9,43.2,-49.3Z" transform="translate(100 100)"/>
+      </svg>
+    </header>
+
+    <section class="card">
+      <div class="message" id="message">
+        <span id="typing" class="typing"></span>
+      </div>
+
+      <div class="controls">
+        <button class="btn" id="playBtn" aria-pressed="false">▶ Putar Lagu & Biarkan</button>
+        <button class="btn ghost" id="revealBtn">📜 Baca Pesanku</button>
+
+        
+      </div>
+
+      <footer>
+        <div class="credit">Lyabarreal exilium — Lyaakbarra solinaria.</div>
+        <div style="text-align:right">❤</div>
+      </footer>
+    </section>
+  </div>
+
+  <!-- overlay modal for full poem/message -->
+  <div class="reveal" id="reveal">
+    <div class="modal">
+      <h2 style="margin:0;font-family:'Great Vibes',cursive;color:var(--accent);font-size:30px">Untuk Akbar</h2>
+      <p style="color:var(--muted);margin-top:6px"></p>
+      <div id="fullText" style="margin-top:14px;color:#f7f0ff;line-height:1.7;font-size:16px">
+        <!-- Default lines, edit them inside the HTML or via the `TEXT_LINES` array in script -->
+      </div>
+
+      <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:16px">
+        <button class="btn ghost" id="closeReveal">Tutup</button>
+        <button class="btn" id="downloadBtn">Simpan Halaman</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Audio: replace the src with your hosted mp3 file URL or put a base64 data URL (if you know how). -->
+  <audio id="player" preload="auto">
+    <source src="kamin.mp3" type="audio/mpeg">
+  </audio>
+
+  <script>
+    /* ========= CUSTOMIZE HERE ==========
+       Ganti teks di TEXT_LINES dengan kata-kata rindumu.
+       Untuk lagu: unggah file MP3 ke hosting (Google Drive public direct link, Dropbox raw link, atau hosting file lain), lalu tambahkan <source> ke tag <audio> di atas.
+    */
+
+    const TEXT_LINES = [
+      'Hi, abanggg akbarrr, kalo abang udah buka link nya dan baca ini, cukup dibaca aja kok, ga usah dibalas apa-apa.',
+      'belum lama sih, tapi Lya pengen tau kabar abang, semoga sehat terus yaaaa, dan hal-hal baik selalu mengelilingi abang.',
+      'Lya buat ini karna Lya gabisa chat abang, dan karna Lya gabisa tahan, semoga dengan cara ini gak ganggu abang yaaa.',
+      'gapapa kan? gapapa dengan cara ini kan? soalnya Lya kangen abanggg, 24/7 Lya selalu kepikiran abang.',
+      'boleh ga kalo Lya berdoa supaya abang ditakdirkan untuk Lya, kalo abang gamau mungkin doa Lya berubah jadi meminta supaya perasaan Lya untuk abang hilang.',
+      'tapi Lya gamau sihh, biar aja perasaan Lya untuk abang selamanya lah sampe Lya terbiasa sendiri.',
+      'abang gak usah mikirin Lya, Lya gapapa kok, gak perlu dipikirin, ya Lya tau abang pasti ga mikirin Lya, aman, abang fokus sama diri abang yaa.',
+      'hmmm, semangat yaa abaanggg, selalu jaga kesehatan, doa terbaik selalu untuk abang, Lya sayang abaannggg.'
+    ];
+
+    // typing effect
+    const typingEl = document.getElementById('typing');
+    const messageEl = document.getElementById('message');
+    let lineIndex = 0, charIndex = 0;
+
+    function typeNext(){
+      if(lineIndex >= TEXT_LINES.length) return;
+      const line = TEXT_LINES[lineIndex];
+      typingEl.textContent = line.slice(0,charIndex);
+      charIndex++;
+      if(charIndex > line.length){
+        // move to next line with a break
+        lineIndex++; charIndex=0;
+        typingEl.textContent += '\n\n';
+        setTimeout(typeNext, 3000);
+      } else setTimeout(typeNext, 36 + Math.random()*40);
+    }
+
+    // reveal modal
+    const reveal = document.getElementById('reveal');
+    const revealBtn = document.getElementById('revealBtn');
+    const closeReveal = document.getElementById('closeReveal');
+    const fullText = document.getElementById('fullText');
+
+    revealBtn.addEventListener('click', ()=>{
+      // fill fullText
+      fullText.innerHTML = TEXT_LINES.map(l => `<p style="margin:8px 0">${escapeHtml(l)}</p>`).join('');
+      reveal.classList.add('show');
+    });
+    closeReveal.addEventListener('click', ()=> reveal.classList.remove('show'));
+
+    // play button + audio handling
+    const playBtn = document.getElementById('playBtn');
+    const player = document.getElementById('player');
+
+    playBtn.addEventListener('click', async ()=>{
+      // Start typing if not started
+      if(lineIndex === 0 && charIndex === 0) typeNext();
+
+      // try to play audio if source exists
+      if(player.querySelector('source')){
+        try{ await player.play(); playBtn.textContent = '▮▮ Hentikan Lagu'; playBtn.setAttribute('aria-pressed','true'); }
+        catch(e){ alert('Browser mungkin memblokir autoplay. Silakan tekan tombol play di pemutar audio.'); }
+      } else {
+        // no audio provided: toggle muted typing ambience
+        if(playBtn.getAttribute('data-muted') === '1'){
+          playBtn.removeAttribute('data-muted'); playBtn.textContent = '▶ Putar Lagu & Biarkan';
+        } else { playBtn.setAttribute('data-muted','1'); playBtn.textContent = '▮▮ Hentikan Lagu'; }
+      }
+    });
+
+    player.addEventListener('ended', ()=>{ playBtn.textContent = '▶ Putar Lagi'; playBtn.setAttribute('aria-pressed','false'); });
+
+    // copy link
+    const copyLink = document.getElementById('copyLink');
+    const urlBox = document.getElementById('urlBox');
+    copyLink.addEventListener('click', ()=>{
+      // If the page is hosted, this will copy location.href. Otherwise suggest saving and uploading.
+      if(location.protocol.startsWith('http')){
+        navigator.clipboard.writeText(location.href).then(()=>{ copyLink.textContent='Tersalin!'; setTimeout(()=>copyLink.textContent='Salin Link',1200); });
+      } else {
+        navigator.clipboard.writeText('(Simpan file ini lalu upload ke hosting agar dapat dibagikan)').then(()=>{ copyLink.textContent='Tersalin!'; setTimeout(()=>copyLink.textContent='Salin Link',1200); });
+      }
+    });
+
+    // download file
+    document.getElementById('downloadBtn').addEventListener('click', ()=>{
+      const html = `<!doctype html>\n${document.documentElement.outerHTML}`;
+      const blob = new Blob([html],{type:'text/html'});
+      const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'surat-rindu.html'; a.click();
+    });
+
+    // small particle/stars animation
+    const cvs = document.getElementById('cstars');
+    function resize(){ cvs.width = window.innerWidth; cvs.height = window.innerHeight; }
+    window.addEventListener('resize', resize); resize();
+    const ctx = cvs.getContext('2d');
+    const stars = Array.from({length:80}).map(()=>({x:Math.random()*cvs.width,y:Math.random()*cvs.height,r:Math.random()*1.6+0.2,vy:Math.random()*0.25+0.02,alpha:Math.random()*0.8+0.2}));
+    function anim(){ ctx.clearRect(0,0,cvs.width,cvs.height); for(let s of stars){ s.y -= s.vy; if(s.y < -10) s.y = cvs.height+10; ctx.globalAlpha = s.alpha; ctx.beginPath(); ctx.arc(s.x,s.y,s.r,0,Math.PI*2); ctx.fillStyle='rgba(200,170,200,1)'; ctx.fill(); } requestAnimationFrame(anim); }
+    anim();
+
+    // helpful small functions
+    function escapeHtml(s){ return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br/>'); }
+
+    // initialize: show short typed preview automatically
+    setTimeout(()=>{ if(lineIndex === 0) typeNext(); }, 800);
+  </script>
+</body>
+</html>
